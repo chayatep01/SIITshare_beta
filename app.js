@@ -19,7 +19,7 @@ var blogSchema = new mongoose.Schema({
 var Blog = mongoose.model("Blog",blogSchema);
 
 
-//routing
+//index route
 app.get("/",function(req,res){
   res.redirect("/blogs");
 });
@@ -33,8 +33,24 @@ app.get("/blogs",function(req ,res){
     }
   });
 });
+//new route
+app.get("/blogs/new",function(req,res){
+  res.render("new");
+});
 
+// CREATE ROUTE
+app.post("/blogs", function(req, res){
+    // create blog
+    Blog.create(req.body.blog, function(err, newBlog){
+        if(err){
+            res.render("new");
+        } else {
+            // then, redirect to the index
+            res.redirect("/blogs");
+        }
+    });
+});
 
-app.listen(3030, process.env.IP, function(){
+app.listen(8080, process.env.IP, function(){
     console.log("blog is running");
 });
