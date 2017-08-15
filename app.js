@@ -3,7 +3,7 @@ var app = express();
 var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 
-//conntect to mongo db
+//connect to mongo db
 mongoose.connect("mongodb://localhost/siitshare", {useMongoClient: true});
 
 app.set("view engine", "ejs");
@@ -17,9 +17,15 @@ var blogSchema = new mongoose.Schema({
     created: {type: Date, default: Date.now}
 });
 var Blog = mongoose.model("Blog",blogSchema);
+//comment blog
+var commentSchema = new mongoose.Schema({
+  message : String ,
+  name :String
+  created: {type: Date, default: Date.now}
+});
+var comment = mongoose.model("Comment" , commentSchema);
 
-
-//index route
+//INDEX ROUTE
 app.get("/",function(req,res){
   res.redirect("/blogs");
 });
@@ -33,7 +39,7 @@ app.get("/blogs",function(req ,res){
     }
   });
 });
-//new route
+//NEW ROUTE
 app.get("/blogs/new",function(req,res){
   res.render("new");
 });
@@ -50,6 +56,22 @@ app.post("/blogs", function(req, res){
         }
     });
 });
+//SHOW ROUTE
+app.get("/blogs/:id",function(req,res){
+  Blog.findById(req.params.id,function(err,foundBlog){
+    if (err){
+      res.redirect("/blogs")
+    } else {
+
+      res.render("show" , {blog:foundBlog});
+    }
+  })
+});
+
+//ADD COMMENT
+app.get("/blogs/:id/comment",function(req,res){
+  res.render("comment");
+})
 
 app.listen(8080, process.env.IP, function(){
     console.log("blog is running");
