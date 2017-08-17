@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/azure-appservice-static
+    docker:
+      - image: node:6.10.0
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: npm install
+      - run:
+          name: NPM Test
+          command: npm test
+
+# Deploy production
+  - deploy:
+      command: |
+        if [ "${CIRCLE_BRANCH}" == "master" ];
+          then ./scripts/publish.sh production;
+        fi
