@@ -4,11 +4,12 @@
 
 
 <% blogs.forEach(function(blog){%>
-  <div>
+  <div id="blogposted">
     <h2><%= blog.title %></h2>
     <span><%= blog.created.toDateString() %></span>
     <p><%= blog.body%></p>
     <a href="/blogs/<%= blog._id %>">Reply</a>
+    <i class="reply icon icon"></i>
   </div>
 <% }) %>
 

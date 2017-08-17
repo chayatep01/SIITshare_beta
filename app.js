@@ -10,20 +10,21 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended : true}));
 
-//mongoose model
+//blogs model
 var blogSchema = new mongoose.Schema({
     title: String,
     body: String,
     created: {type: Date, default: Date.now}
 });
 var Blog = mongoose.model("Blog",blogSchema);
-//comment blog
-var commentSchema = new mongoose.Schema({
+//comment box model
+var replySchema = new mongoose.Schema({
   message : String ,
-  name :String
+  name :String ,
   created: {type: Date, default: Date.now}
 });
-var comment = mongoose.model("Comment" , commentSchema);
+var Reply = mongoose.model("Reply" , replySchema);
+
 
 //INDEX ROUTE
 app.get("/",function(req,res){
@@ -56,6 +57,7 @@ app.post("/blogs", function(req, res){
         }
     });
 });
+
 //SHOW ROUTE
 app.get("/blogs/:id",function(req,res){
   Blog.findById(req.params.id,function(err,foundBlog){
@@ -68,10 +70,14 @@ app.get("/blogs/:id",function(req,res){
   })
 });
 
-//ADD COMMENT
-app.get("/blogs/:id/comment",function(req,res){
-  res.render("comment");
-})
+
+
+app.get("/blogs/:id/reply",function(req,res){
+  res.render("reply")
+});
+
+
+
 
 app.listen(8080, process.env.IP, function(){
     console.log("blog is running");

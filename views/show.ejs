@@ -1,19 +1,23 @@
 <% include ./partials/header %>
   <div class="ui main text container segment">
-    <div class="ui huge header"> <%= blog.title%></div>
+    <div class="ui huge header"> <%= blog.title %></div>
 
   <div class="ui top attached">
     <div class="content">
         <span><%= blog.created.toDateString() %></span>
-
-      </div>
-      <div class="description">
+    </div>
+    <div class="description">
         <p><%- blog.body %></p>
-
-      </div>
-
     </div>
 
   </div>
-  <% include ./partials/comment %>
+
+
+
+
+</div>
+<div class="ui main text container segment">
+  <a href ="/blogs/:id/reply" class="right item">Answer</a>
+  <i class="edit icon icon"></i>
+</div>
 <% include ./partials/footer %>
