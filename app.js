@@ -4,7 +4,8 @@ var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 
 //connect to mongo db
-mongoose.connect("mongodb://localhost/siitshare", {useMongoClient: true});
+//mongoose.connect("mongodb://localhost/siitshare", {useMongoClient: true});
+mongoose.connect('mongodb://demosiitshare:PrjVAAMxet6Um4JTmpB0RW4V7Rp8zQbm8tTY2Dnf1l8WNnZt5CPCLEQx5J28P5rO9r9dcEo27TMgdHWlUsPbZg==@demosiitshare.documents.azure.com:10255/mean-dev?ssl=true&sslverifycertificate=true', {useMongoClient: true});
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
